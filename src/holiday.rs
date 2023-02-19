@@ -1,6 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 /// Holiday.
+#[derive(Deserialize, Serialize)]
 pub struct Holiday {
     pub name: String,
-    pub country: String,
-    pub date: (u8, u8, u16),
+    pub date: (usize, usize),
 }
