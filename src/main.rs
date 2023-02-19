@@ -4,6 +4,7 @@ extern crate rocket;
 extern crate lazy_static;
 
 mod holiday;
+mod routes;
 
 use std::fs::{self, File};
 
@@ -35,5 +36,5 @@ lazy_static! {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    rocket::build().mount("/", routes![index, routes::get_holidays_by_date])
 }
