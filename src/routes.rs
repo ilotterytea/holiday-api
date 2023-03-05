@@ -1,6 +1,12 @@
 use crate::{holiday::Holiday, HOLIDAYS};
 use chrono::{DateTime, Datelike, Duration, NaiveDateTime, Timelike};
 use rocket::serde::json::Json;
+use rocket_dyn_templates::{context, Template};
+
+#[get("/")]
+pub fn index() -> Template {
+    Template::render("index", context! {})
+}
 
 #[get("/<month>/<day>")]
 pub fn get_holidays_by_date(month: u32, day: u32) -> Result<Json<Vec<String>>, ()> {

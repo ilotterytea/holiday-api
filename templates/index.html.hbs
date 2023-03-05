@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Holidays!</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Holidays!</h1>
+      <h3>Stay up to date on today's holidays!</h3>
+      <hr>
+    </div>
+    <div class="content">
+      <div class="endpoints">
+        <h2>API Endpoints <i>(/api/v1)</i></h2>
+        <ul>
+          <li>
+            <h3>GET /:month/:day</h3>
+            <p>
+              Get the holidays from the specified day and month.
+              This endpoint returns an <code>String[]</code>.
+              If the date or month is incorrect, or there is no holiday for that day, an empty array will be returned.
+            </p>
+          </li>
+
+          <li>
+            <h3>GET /today</h3>
+            <p>
+              Get holidays by current UTC time.
+              This endpoint returns an <code>String[]</code> as well.
+            </p>
+          </li>
+
+          <li>
+            <h3>GET /today?utc=-12..12</h3>
+            <p>
+              Get holidays by specified UTC timezone.
+              This endpoint returns an <code>String[]</code>.
+              If <code>utc</code> exceeds the range -12 to 12, an empty array will be returned. If <code>utc</code> is
+              not a number or is corrupted, you will get a response from the <code>/today</code> endpoint.
+            </p>
+          </li>
+
+          <li>
+            <h3>GET /search?q=...</h3>
+            <p>
+              Get the holidays from the specified day and month. Search for holidays. This uses RegEx with the pattern
+              <code>(?i)your_query</code>, where your_query is your query. Or, to put it simply, it will add to the
+              array the
+              holiday
+              whose name matches the query, regardless of the case and position of the query in the name.
+              This endpoint returns an <code><br>{<br>
+                name: String,<br>
+                date: [Integer, Integer]<br>
+                }[]</code>.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
