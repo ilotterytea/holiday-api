@@ -4,5 +4,5 @@ use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize)]
 pub struct Holiday {
     pub name: String,
-    pub date: (usize, usize),
+    pub date: (u32, u32),
 }
