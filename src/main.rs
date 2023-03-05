@@ -36,5 +36,12 @@ lazy_static! {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index, routes::get_holidays_by_date])
+    rocket::build().mount(
+        "/",
+        routes![
+            index,
+            routes::get_holidays_by_date,
+            routes::get_todays_holiday_utc
+        ],
+    )
 }
