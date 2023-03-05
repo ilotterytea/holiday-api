@@ -41,7 +41,8 @@ fn rocket() -> _ {
         routes![
             index,
             routes::get_holidays_by_date,
-            routes::get_todays_holiday_utc
+            routes::get_todays_holiday_utc,
+            routes::get_todays_holiday_timezone
         ],
     )
 }
