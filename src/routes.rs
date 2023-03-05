@@ -1,4 +1,4 @@
-use crate::HOLIDAYS;
+use crate::{holiday::Holiday, HOLIDAYS};
 use chrono::{DateTime, Datelike, Duration, NaiveDateTime, Timelike};
 use rocket::serde::json::Json;
 
@@ -51,4 +51,19 @@ pub fn get_todays_holiday_timezone(utc: i64) -> Result<Json<Vec<String>>, ()> {
             .map(|p| p.name.clone())
             .collect::<Vec<String>>(),
     ))
+}
+
+#[get("/search?<q>")]
+pub fn search_holidays(q: &str) -> Result<Json<Vec<Holiday>>, ()> {
+    let holidays = HOLIDAYS.get(0).unwrap();
+    let mut _hol: Vec<Holiday> = Vec::new();
+    let reg = regex::Regex::new(format!(r"(?i){}", q).as_str()).unwrap();
+
+    for holiday in holidays {
+        if reg.is_match(holiday.name.as_str()) {
+            _hol.push(holiday.clone());
+        }
+    }
+
+    Ok(Json(_hol))
 }
