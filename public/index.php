@@ -12,10 +12,19 @@ if (-12 <= $utc && $utc <= 12) {
 
 $month = $_GET["month"] ?? date("n", $time);
 $day = $_GET["day"] ?? date("d", $time);
+$search = $_GET["search"] ?? "";
+$search_regex = "/(?i)$search/";
 
 $holidays = [];
 
 foreach (HOLIDAYS[0] as $holiday) {
+    if ($search != "") {
+        if (preg_match($search_regex, $holiday["name"])) {
+            array_push($holidays, $holiday);
+        }
+        continue;
+    }
+
     if ($holiday["date"][0] == $month && $holiday["date"][1] == $day) {
         array_push($holidays, $holiday);
     }
@@ -33,19 +42,31 @@ $holiday_count = count($holidays);
 <html>
 
 <head>
-    <title><?php echo $holiday_count ?> holidays on <?php echo "$day.$month" ?>
-        <?php echo $utc != 0 ? ("(UTC" . ($utc >= 0 ? "+" : "") . "$utc)") : "" ?>
-    </title>
+    <title><?php
+    if ($search == "") {
+        echo "$holiday_count holidays on $day.$month" . ($utc != 0 ? (" (UTC" . ($utc >= 0 ? "+" : "") . "$utc)") : "");
+    } else {
+        echo count($holidays) . " holidays found on query \"$search\"";
+    }
+    ?></title>
 </head>
 
 <body>
-    <h1><?php echo $holiday_count ?> holidays on <?php echo "$day.$month" ?>
-        <?php echo $utc != 0 ? ("(UTC" . ($utc >= 0 ? "+" : "") . "$utc)") : "" ?>
-    </h1>
+    <h1><?php
+    if ($search == "") {
+        echo "$holiday_count holidays on $day.$month" . ($utc != 0 ? (" (UTC" . ($utc >= 0 ? "+" : "") . "$utc)") : "");
+    } else {
+        echo count($holidays) . " holidays found on query \"$search\"";
+    }
+    ?></h1>
     <ul>
         <?php
         foreach ($holidays as $holiday) {
-            echo '<li>' . $holiday["name"] . '</li>';
+            if ($search == "") {
+                echo '<li>' . $holiday["name"] . '</li>';
+            } else {
+                echo '<li>' . $holiday["name"] . ' (' . $holiday["date"][1] . '.' . $holiday["date"][0] . ')</li>';
+            }
         }
         ?>
     </ul>
