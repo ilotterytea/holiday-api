@@ -10,10 +10,13 @@ if (-12 <= $utc && $utc <= 12) {
     $utc = 0;
 }
 
-$month = $_GET["month"] ?? date("n", $time);
-$day = $_GET["day"] ?? date("d", $time);
+$month = intval($_GET["month"] ?? date("n", $time));
+$day = intval($_GET["day"] ?? date("d", $time));
+
 $search = $_GET["search"] ?? "";
-$search_regex = "/(?i)$search/";
+$search_regex = "/(?i)" . preg_quote($search, "/") . "/";
+
+$search = htmlspecialchars($search);
 
 $holidays = [];
 
